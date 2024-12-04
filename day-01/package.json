@@ -1,0 +1,19 @@
+{
+  "name": "@ts-advent-of-code-2024/day-01",
+  "version": "0.0.1",
+  "dependencies": {
+    "rxjs": "^7.8.1",
+    "tslib": "^2.3.0"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "private": true,
+  "nx": {
+    "sourceRoot": "day-01/src",
+    "name": "day-01"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12"
+  }
+}

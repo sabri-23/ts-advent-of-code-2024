@@ -2,18 +2,34 @@
   "name": "@ts-advent-of-code-2024/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "day-01": "nx run @ts-advent-of-code-2024/day-01:build && node day-01/dist/index.js",
+    "day-02": "nx run @ts-advent-of-code-2024/day-02:build && node day-02/dist/index.js",
+    "day-03": "nx run @ts-advent-of-code-2024/day-03:build && node day-03/dist/index.js"
+
+  },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "rxjs": "^7.8.1"
+  },
   "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@nx/eslint": "20.1.4",
+    "@nx/eslint-plugin": "20.1.4",
     "@nx/js": "20.1.4",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "18.16.9",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.0.0",
     "nx": "20.1.4",
+    "pino-pretty": "^13.0.0",
     "prettier": "^2.6.2",
     "tslib": "^2.3.0",
-    "typescript": "~5.5.2"
+    "typescript": "~5.5.2",
+    "typescript-eslint": "^8.0.0"
   },
   "workspaces": [
     "packages/*"
