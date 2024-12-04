@@ -72,17 +72,18 @@ As you embark on this reactive coding journey, remember:
 
 
 Happy coding, and may your observables always emit joy and success! 🚀
-
+<pre>
    🎄 Advent Calendar 🎄
 +---+---+---+---+---+---+
-| 1̶ | 2̶ | 3̶ | 4̶ | 5 | 6 |
+|&nbsp;1̶&nbsp;|&nbsp;2̶&nbsp;|&nbsp;3̶&nbsp;|&nbsp;4̶&nbsp;|&nbsp;5&nbsp;|&nbsp;6&nbsp;|
 +---+---+---+---+---+---+
-| 7 | 8 | 9 |10 |11 |12 |
+|&nbsp;7&nbsp;|&nbsp;8&nbsp;|&nbsp;9&nbsp;|10&nbsp;|11&nbsp;|12&nbsp;|
 +---+---+---+---+---+---+
-|13 |14 |15 |16 |17 |18 |
+|13&nbsp;|14&nbsp;|15&nbsp;|16&nbsp;|17&nbsp;|18&nbsp;|
 +---+---+---+---+---+---+
-|19 |20 |21 |22 |23 |24 |
+|19&nbsp;|20&nbsp;|21&nbsp;|22&nbsp;|23&nbsp;|24&nbsp;|
 +---+---+---+---+---+---+
-|       🎁🎅 25 🎁       |
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁🎅&nbsp;25&nbsp;🎁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 +-----------------------+
     Count down to joy!
+</pre>
