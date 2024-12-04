@@ -1,9 +1,13 @@
 import { from, map, tap, reduce } from 'rxjs';
 import { input1 } from './input-part-1';
 
+console.log('========== PART 1 ==========');
 part1();
+console.log('============================');
 console.log('\n\n')
+console.log('========== PART 2 ==========');
 part2();
+console.log('============================');
 
 export function part1() {
   const input: number[][] = input1;
@@ -28,7 +32,6 @@ export function part1() {
       trend === 'increasing' ? diff > 0 : diff < 0
     );
   };
-  console.log('========== PART 1 ==========');
 
   console.log(
     `[INFO] Starting analysis of Red-Nosed reactor reports. Total reports to process: ${input.length}.`
@@ -81,7 +84,6 @@ export function part1() {
       },
       complete: () => {
         console.log(`[INFO] "Outstanding work!" exclaims the Chief Engineer.`);
-        console.log('============================');
       },
     });
 }
@@ -126,7 +128,6 @@ export function part2() {
     return false;
   };
 
-  console.log('========== PART 2: ANALYSIS WITH PROBLEM DAMPENER ==========');
   console.log(
     `[INFO] Starting analysis with Problem Dampener enabled. Total reports to process: ${input.length}.`
   );
@@ -182,7 +183,6 @@ export function part2() {
       },
       complete: () => {
         console.log(`[INFO] "Outstanding work!" exclaims the Chief Engineer.`);
-        console.log('============================');
       },
     });
 }

@@ -2,9 +2,13 @@ import { from, filter, scan, tap, reduce, map } from 'rxjs';
 import { input1 } from './input-part-1';
 import { input2 } from './input-part-2';
 
+console.log('========== PART 1 ==========');
 part1();
-console.log('\n\n');
+console.log('============================');
+console.log('\n\n')
+console.log('========== PART 2 ==========');
 part2();
+console.log('============================');
 
 export function part1() {
   const inputString = input1;

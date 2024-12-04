@@ -4,11 +4,13 @@ import listRightJson from './data/list-right.json';
 import listLeftJson2 from './data/list-left-2.json';
 import listRightJson2 from './data/list-right-2.json';
 
-console.log('part 1');
+console.log('========== PART 1 ==========');
 part1();
-console.log('\n\n');
-console.log('part 2');
+console.log('============================');
+console.log('\n\n')
+console.log('========== PART 2 ==========');
 part2();
+console.log('============================');
 
 export function part1(): string {
   const listLeftData: number[] = listLeftJson.sort(

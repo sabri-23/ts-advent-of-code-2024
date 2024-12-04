@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "day-01": "nx run @ts-advent-of-code-2024/day-01:build && node day-01/dist/index.js",
-    "day-02": "nx run @ts-advent-of-code-2024/day-02:build && node day-02/dist/index.js",
-    "day-03": "nx run @ts-advent-of-code-2024/day-03:build && node day-03/dist/index.js"
-
+    "day-01": "npx nx run @ts-advent-of-code-2024/day-01:build && node day-01/dist/index.js",
+    "day-02": "npx nx run @ts-advent-of-code-2024/day-02:build && node day-02/dist/index.js",
+    "day-03": "npx nx run @ts-advent-of-code-2024/day-03:build && node day-03/dist/index.js",
+    "day-04": "npx nx run @ts-advent-of-code-2024/day-04:build && node day-04/dist/index.js"
   },
   "private": true,
   "dependencies": {

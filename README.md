@@ -11,6 +11,13 @@ Learn more about AoC on their official website: [Advent of Code](https://advento
 
 ## My Advent of Code Setup
 
+### Installation
+To get started, clone this repository and install the dependencies from the root directory:
+
+```bash
+npm install
+```
+
 ### Tools of the Trade
 - **Language**: [TypeScript](https://www.typescriptlang.org)
 - **Framework**: [Nx](https://nx.dev)
@@ -66,3 +73,16 @@ As you embark on this reactive coding journey, remember:
 
 Happy coding, and may your observables always emit joy and success! 🚀
 
+   🎄 Advent Calendar 🎄
++---+---+---+---+---+---+
+| 1̶ | 2̶ | 3̶ | 4̶ | 5 | 6 |
++---+---+---+---+---+---+
+| 7 | 8 | 9 |10 |11 |12 |
++---+---+---+---+---+---+
+|13 |14 |15 |16 |17 |18 |
++---+---+---+---+---+---+
+|19 |20 |21 |22 |23 |24 |
++---+---+---+---+---+---+
+|       🎁🎅 25 🎁       |
++-----------------------+
+    Count down to joy!
