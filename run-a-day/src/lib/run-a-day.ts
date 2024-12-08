@@ -64,7 +64,7 @@ async function promptUser() {
       name: 'day',
       message: 'Select a day to solve:',
       choices: Array.from(
-        { length: 5 },
+        { length: 6 },
         (_, i) => `day-${String(i + 1).padStart(2, '0')}`
       ),
     },
@@ -76,6 +76,7 @@ async function promptUser() {
         { name: 'Part 1', value: 1 },
         { name: 'Part 2', value: 2 },
       ],
+      default:[1,2],
       validate: (input) =>
         input.length > 0 ? true : red('You must select at least one part.'),
     },
