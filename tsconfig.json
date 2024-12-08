@@ -3,17 +3,12 @@
   "compileOnSave": false,
   "files": [],
   "references": [
-    {
-      "path": "./day-01"
-    },
-    {
-      "path": "./day-02"
-    },
-    {
-      "path": "./day-03"
-    },
-    {
-      "path": "./day-04"
-    }
+    { "path": "./day-01" },
+    { "path": "./day-02" },
+    { "path": "./day-03" },
+    { "path": "./day-04" },
+    { "path": "./day-05" },
+    { "path": "./day-06" },
+    { "path": "./run-a-day" }
   ]
 }

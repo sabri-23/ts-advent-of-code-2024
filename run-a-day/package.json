@@ -1,0 +1,16 @@
+{
+  "name": "@ts-advent-of-code-2024/run-a-day",
+  "version": "0.0.1",
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@ts-advent-of-code-2024/day-01": "0.0.1"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "private": true,
+  "nx": {
+    "sourceRoot": "run-a-day/src",
+    "name": "run-a-day"
+  }
+}

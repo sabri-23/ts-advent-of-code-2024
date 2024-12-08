@@ -8,6 +8,6 @@
     "emitDeclarationOnly": false,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "src/**/*.json", "src/**/*.txt"],
-  "references": [],
+  "include": ["src/**/*.ts"],
+  "references": [{ "path": "../day-01/tsconfig.lib.json" }]
 }

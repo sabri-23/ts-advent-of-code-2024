@@ -1,37 +1,16 @@
 import { from, map, tap, reduce } from 'rxjs';
-import { input1 } from './input-part-1';
+import * as fs from 'fs';
 
-console.log('========== PART 1 ==========');
-part1();
-console.log('============================');
-console.log('\n\n')
-console.log('========== PART 2 ==========');
-part2();
-console.log('============================');
+export function part1(filePath = 'day-02/src/lib/input-1.txt') {
+  const input: number[][] = fs
+    .readFileSync(filePath, 'utf8')
+    .trim()
+    .split('\n') // Split into lines
+    .map((line) => line.split(/\s+/).map(Number));
 
-export function part1() {
-  const input: number[][] = input1;
   const milestones = [0.25, 0.5, 0.75, 1].map((fraction) =>
     Math.floor(input.length * fraction)
   );
-
-  const isSafeArray = (array: number[]): boolean => {
-    if (array.length < 2) return false;
-
-    // Compute differences between consecutive elements
-    const diffs = array.slice(1).map((val, i) => val - array[i]);
-
-    // Check for invalid differences
-    if (diffs.some((diff) => diff === 0 || diff < -3 || diff > 3)) return false;
-
-    // Determine the trend (increasing or decreasing)
-    const trend = diffs[0] > 0 ? 'increasing' : 'decreasing';
-
-    // Check if the trend is consistent
-    return diffs.every((diff) =>
-      trend === 'increasing' ? diff > 0 : diff < 0
-    );
-  };
 
   console.log(
     `[INFO] Starting analysis of Red-Nosed reactor reports. Total reports to process: ${input.length}.`
@@ -40,26 +19,27 @@ export function part1() {
 
   from(input)
     .pipe(
-      map((array, index) => ({ index, array, safe: isSafeArray(array) })),
+      map((array, index) => ({
+        index,
+        array,
+        safe: (() => {
+          if (array.length < 2) return false;
+
+          const diffs = array.slice(1).map((val, i) => val - array[i]);
+          if (diffs.some((diff) => diff === 0 || diff < -3 || diff > 3))
+            return false;
+
+          const trend = diffs[0] > 0 ? 'increasing' : 'decreasing';
+
+          return diffs.every((diff) =>
+            trend === 'increasing' ? diff > 0 : diff < 0
+          );
+        })(),
+      })),
       reduce(
-        (acc, { safe, index }) => {
+        (acc, { safe }) => {
           if (safe) acc.safeCount++;
           acc.totalCount++;
-
-          if (milestones.includes(index)) {
-            console.log(
-              `[LOG] ${Math.floor(
-                (index / input.length) * 100
-              )}% milestone reached. Reports processed: ${index}. Safe reports: ${
-                acc.safeCount
-              }, Unsafe reports: ${index - acc.safeCount}.`
-            );
-          }
-          if (index === Math.floor(input.length * 0.5)) {
-            console.log(
-              `[LOG] The engineers cheer as the analysis hits the halfway mark.`
-            );
-          }
 
           return acc;
         },
@@ -75,58 +55,19 @@ export function part1() {
           +++++++++++++++++++++++++++++++`);
       })
     )
-    .subscribe({
-      error: (err) => {
-        console.error(
-          `[ERROR] Analysis failed due to an error: ${err.message}`
-        );
-        console.error(`[ERROR] Details: ${err.stack}`);
-      },
-      complete: () => {
-        console.log(`[INFO] "Outstanding work!" exclaims the Chief Engineer.`);
-      },
-    });
+    .subscribe();
 }
 
-export function part2() {
-  const input: number[][] = input1;
+export function part2(filePath = 'day-02/src/lib/input-2.txt') {
+  const input: number[][] = fs
+    .readFileSync(filePath, 'utf8')
+    .trim() // Remove any leading/trailing whitespace
+    .split('\n') // Split into lines
+    .map((line) => line.split(/\s+/).map(Number)); // Split numbers by whitespace and convert to integers
+
   const milestones = [0.25, 0.5, 0.75, 1].map((fraction) =>
     Math.floor(input.length * fraction)
   );
-
-  const isSafeArray = (array: number[]): boolean => {
-    if (array.length < 2) return false;
-
-    // Compute differences between consecutive elements
-    const diffs = array.slice(1).map((val, i) => val - array[i]);
-
-    // Check for invalid differences
-    if (diffs.some((diff) => diff === 0 || diff < -3 || diff > 3)) return false;
-
-    // Determine the trend (increasing or decreasing)
-    const trend = diffs[0] > 0 ? 'increasing' : 'decreasing';
-
-    // Check if the trend is consistent
-    return diffs.every((diff) =>
-      trend === 'increasing' ? diff > 0 : diff < 0
-    );
-  };
-
-  const isSafeWithDampener = (array: number[]): boolean => {
-    if (isSafeArray(array)) {
-      return true;
-    }
-
-    // Test removing each level to see if it becomes safe
-    for (let i = 0; i < array.length; i++) {
-      const modifiedArray = [...array.slice(0, i), ...array.slice(i + 1)];
-      if (isSafeArray(modifiedArray)) {
-        return true;
-      }
-    }
-
-    return false;
-  };
 
   console.log(
     `[INFO] Starting analysis with Problem Dampener enabled. Total reports to process: ${input.length}.`
@@ -139,10 +80,35 @@ export function part2() {
       map((array, index) => ({
         index,
         array,
-        safe: isSafeWithDampener(array),
+        safe: (() => {
+          const isSafeArray = (arr: number[]) => {
+            if (arr.length < 2) return false;
+            const diffs = arr.slice(1).map((val, i) => val - arr[i]);
+            if (diffs.some((diff) => diff === 0 || diff < -3 || diff > 3))
+              return false;
+            const trend = diffs[0] > 0 ? 'increasing' : 'decreasing';
+            return diffs.every((diff) =>
+              trend === 'increasing' ? diff > 0 : diff < 0
+            );
+          };
+
+          if (isSafeArray(array)) {
+            return true;
+          }
+
+          // Test removing each element to see if it becomes safe
+          for (let i = 0; i < array.length; i++) {
+            const modifiedArray = [...array.slice(0, i), ...array.slice(i + 1)];
+            if (isSafeArray(modifiedArray)) {
+              return true;
+            }
+          }
+
+          return false;
+        })(),
       })),
       reduce(
-        (acc, { safe, index, array }) => {
+        (acc, { safe, index }) => {
           if (safe) {
             acc.safeCount++;
           }
@@ -174,15 +140,5 @@ export function part2() {
         +++++++++++++++++++++++++++++++`);
       })
     )
-    .subscribe({
-      error: (err) => {
-        console.error(
-          `[ERROR] Analysis failed due to an error: ${err.message}`
-        );
-        console.error(`[ERROR] Details: ${err.stack}`);
-      },
-      complete: () => {
-        console.log(`[INFO] "Outstanding work!" exclaims the Chief Engineer.`);
-      },
-    });
+    .subscribe();
 }
