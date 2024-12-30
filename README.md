@@ -27,15 +27,17 @@ npm install
 Each day’s puzzle lives as its own module in this Nx repository. To run a specific day’s solution, use the following command:
 
 ```bash
-npm run day-<day_number>
-```
-Example for Day 1:
-```bash
-npm run day-01
+npm start
+# or
+npm run run-a-day
 ```
 
 ### The Challenge
+
 **Goal**: Solve puzzles reactively, embrace functional programming, and have fun!
+
+**Code Golf: Day 05**: Aditionnal solution can be found in day-05. You can run them using `node day-05_code-golf_minify.js < input.txt`
+
 
 ---
 
@@ -75,15 +77,15 @@ Happy coding, and may your observables always emit joy and success! 🚀
 <pre>
    🎄 Advent Calendar 🎄
 +---+---+---+---+---+---+
-|&nbsp;1̶&nbsp;|&nbsp;2̶&nbsp;|&nbsp;3̶&nbsp;|&nbsp;4̶&nbsp;|&nbsp;5&nbsp;|&nbsp;6&nbsp;|
+|&nbsp;1̶&nbsp;|&nbsp;2̶&nbsp;|&nbsp;3̶&nbsp;|&nbsp;4̶&nbsp;|&nbsp;5̶&nbsp;|&nbsp;6̶&nbsp;|
 +---+---+---+---+---+---+
-|&nbsp;7&nbsp;|&nbsp;8&nbsp;|&nbsp;9&nbsp;|10&nbsp;|11&nbsp;|12&nbsp;|
+|&nbsp;7̶&nbsp;|&nbsp;8̶&nbsp;|&nbsp;9̶&nbsp;|1̶0̶&nbsp;|1̶2̶&nbsp;|1̶2̶&nbsp;|
 +---+---+---+---+---+---+
-|13&nbsp;|14&nbsp;|15&nbsp;|16&nbsp;|17&nbsp;|18&nbsp;|
+|1̶3̶&nbsp;|1̶4̶&nbsp;|15&nbsp;|16&nbsp;|17&nbsp;|18&nbsp;|
 +---+---+---+---+---+---+
 |19&nbsp;|20&nbsp;|21&nbsp;|22&nbsp;|23&nbsp;|24&nbsp;|
 +---+---+---+---+---+---+
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁🎅&nbsp;25&nbsp;🎁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;🎁🎅&nbsp;2̶5̶&nbsp;🎁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 +-----------------------+
     Count down to joy!
 </pre>

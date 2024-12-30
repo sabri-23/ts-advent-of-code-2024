@@ -3,12 +3,56 @@
   "compileOnSave": false,
   "files": [],
   "references": [
-    { "path": "./day-01" },
-    { "path": "./day-02" },
-    { "path": "./day-03" },
-    { "path": "./day-04" },
-    { "path": "./day-05" },
-    { "path": "./day-06" },
-    { "path": "./run-a-day" }
+    {
+      "path": "./day-01"
+    },
+    {
+      "path": "./day-02"
+    },
+    {
+      "path": "./day-03"
+    },
+    {
+      "path": "./day-04"
+    },
+    {
+      "path": "./day-05"
+    },
+    {
+      "path": "./day-06"
+    },
+    {
+      "path": "./run-a-day"
+    },
+    {
+      "path": "./day-07"
+    },
+    {
+      "path": "./day-08"
+    },
+    {
+      "path": "./day-09"
+    },
+    {
+      "path": "./day-10"
+    },
+    {
+      "path": "./day-11"
+    },
+    {
+      "path": "./day-12"
+    },
+    {
+      "path": "./day-13"
+    },
+    {
+      "path": "./day-25"
+    },
+    {
+      "path": "./day-14"
+    },
+    {
+      "path": "./day-15"
+    }
   ]
 }

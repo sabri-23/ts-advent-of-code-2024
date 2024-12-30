@@ -1,194 +1,149 @@
 import { from, of } from 'rxjs';
-import { map, reduce, filter, mergeMap, every } from 'rxjs/operators';
+import { map, reduce, filter, mergeMap, every, tap } from 'rxjs/operators';
 import * as fs from 'fs';
 
 // Define types
 type Rule = string;
 type Update = number[];
 
-
-export function part1(filePath = 'day-05/src/lib/input-1.txt') {
+export function part1(filePath = 'day-05/src/lib/input.txt') {
   const input = fs.readFileSync(filePath, 'utf8');
 
-  const parseInputString = (
-    input: string
-  ): { rulesInput: Rule[]; updatesInput: Update[] } => {
-    const lines = input
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line);
+  const lines = input
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line);
 
-    const rulesInput: Rule[] = [];
-    const updatesInput: Update[] = [];
-    let isUpdateSection = false;
+  const rules: Rule[] = [];
+  const updates: Update[] = [];
+  let isUpdateSection = false;
 
-    for (const line of lines) {
-      if (line.includes('|')) {
-        if (!isUpdateSection) {
-          rulesInput.push(line);
-        }
-      } else if (line.includes(',')) {
-        isUpdateSection = true;
-        const update = line.split(',').map((num) => parseInt(num.trim(), 10));
-        updatesInput.push(update);
+  for (const line of lines) {
+    if (line.includes('|')) {
+      if (!isUpdateSection) {
+        rules.push(line);
       }
+    } else if (line.includes(',')) {
+      isUpdateSection = true;
+      const update = line.split(',').map((num) => parseInt(num.trim(), 10));
+      updates.push(update);
     }
-
-    return { rulesInput, updatesInput };
-  };
-
-  // Parse the input string
-  const { rulesInput, updatesInput } = parseInputString(input);
+  }
 
   // Parse rules into a map for quick lookup
-  const rulesMap = new Map<number, Set<number>>();
-  rulesInput.forEach((rule) => {
+  const sequenceRulesMap = new Map<number, Set<number>>();
+  rules.forEach((rule) => {
     const [a, b] = rule.split('|').map(Number);
-    if (!rulesMap.has(a)) rulesMap.set(a, new Set());
-    rulesMap.get(a)!.add(b);
+    if (!sequenceRulesMap.has(a)) sequenceRulesMap.set(a, new Set());
+    sequenceRulesMap.get(a)!.add(b);
   });
 
-  // Validate a single update using RxJS
-  const validateUpdateRx = (update: number[]) => {
-    const positions = new Map<number, number>();
-    update.forEach((page, index) => positions.set(page, index));
+  // Iterates array of update through observable
+  return from(updates).pipe(
+    mergeMap((update) => {
+      const numberIndexMap = new Map<number, number>();
+      update.forEach((number, index) => numberIndexMap.set(number, index));
 
-    return from(Array.from(rulesMap.entries())).pipe(
-      mergeMap(([before, afterSet]) =>
-        of(before).pipe(
-          filter(() => positions.has(before)), // Only check rules for pages in the update
-          mergeMap(() => from(Array.from(afterSet))),
-          every(
-            (after) =>
-              !positions.has(after) ||
-              positions.get(before)! < positions.get(after)!
+      return from(Array.from(sequenceRulesMap.entries())).pipe(
+        mergeMap(([number, sequenceRule]) =>
+          of(number).pipe(
+            filter(() => numberIndexMap.has(number)), //
+            mergeMap(() => from(Array.from(sequenceRule))),
+            every(
+              (numberAfter) =>
+                !numberIndexMap.has(numberAfter) ||
+                numberIndexMap.get(number)! < numberIndexMap.get(numberAfter)!
+            )
           )
-        )
-      ),
-      every((isValid) => isValid) // Ensure all rules are valid
-    );
-  };
-
-  // Find the middle page
-  const findMiddlePage = (update: number[]): number => {
-    const middleIndex = Math.floor(update.length / 2);
-    return update[middleIndex];
-  };
-
-  // RxJS solution
-  from(updatesInput)
-    .pipe(
-      // Validate updates reactively
-      mergeMap((update) =>
-        validateUpdateRx(update).pipe(
-          filter((isValid) => isValid), // Only pass valid updates
-          map(() => update) // Map back to the valid update
-        )
-      ),
-      // Map to the middle page of valid updates
-      map(findMiddlePage),
-      // Sum up the middle pages
-      reduce((sum, middlePage) => sum + middlePage, 0)
+        ),
+        // Ensure all rules are valid
+        every((isValid) => isValid),
+        // Only pass valid update
+        filter((isValid) => isValid),
+        // Map back to the middle page of valid updates
+        map(() => update[Math.floor(update.length / 2)])
+      );
+    }),
+    // Sum up the middle pages
+    reduce((sum, middlePage) => sum + middlePage, 0),
+    tap((result) =>
+      console.log(`Sum of middle pages of valid updates: ${result}`)
     )
-    .subscribe((result) => {
-      console.log(`Sum of middle pages of valid updates: ${result}`);
-    });
-}
+  );
+} // 4185
 
-export function part2(filePath = 'day-05/src/lib/input-2.txt') {
+export function part2(filePath = 'day-05/src/lib/input.txt') {
   const input = fs.readFileSync(filePath, 'utf8');
- 
-  const parseInputString = (
-    input: string
-  ): { rulesInput: string[]; updatesInput: number[][] } => {
-    // Split the input into lines and clean up
-    const lines = input
-      .split('\n')
-      .map((line) => line.trim())
-      .filter((line) => line);
 
-    const rulesInput: string[] = [];
-    const updatesInput: number[][] = [];
-    let isUpdateSection = false;
+  const lines = input
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line);
 
-    for (const line of lines) {
-      if (line.includes('|')) {
-        if (!isUpdateSection) {
-          rulesInput.push(line);
-        }
-      } else if (line.includes(',')) {
-        isUpdateSection = true;
-        const update = line.split(',').map((num) => parseInt(num.trim(), 10));
-        updatesInput.push(update);
+  const rules: Rule[] = [];
+  const updates: Update[] = [];
+  let isUpdateSection = false;
+
+  for (const line of lines) {
+    if (line.includes('|')) {
+      if (!isUpdateSection) {
+        rules.push(line);
       }
+    } else if (line.includes(',')) {
+      isUpdateSection = true;
+      const update = line.split(',').map((num) => parseInt(num.trim(), 10));
+      updates.push(update);
     }
+  }
 
-    return { rulesInput, updatesInput };
-  };
-
-  const { rulesInput, updatesInput } = parseInputString(input);
-
-  // Parse rules into a map for quick lookup
-  const rulesMap = new Map<number, Set<number>>();
-  rulesInput.forEach((rule) => {
+  // Parse rules into a map
+  const sequenceRulesMap = new Map<number, Set<number>>();
+  rules.forEach((rule) => {
     const [a, b] = rule.split('|').map(Number);
-    if (!rulesMap.has(a)) rulesMap.set(a, new Set());
-    rulesMap.get(a)!.add(b);
+    if (!sequenceRulesMap.has(a)) sequenceRulesMap.set(a, new Set());
+    sequenceRulesMap.get(a)!.add(b);
   });
 
-  // Validate a single update using RxJS
-  const validateUpdateRx = (update: number[]) => {
-    const positions = new Map<number, number>();
-    update.forEach((page, index) => positions.set(page, index));
+  // Iterates array of update through observable
+  return from(updates).pipe(
+    mergeMap((update) => {
+      const numberIndexMap = new Map<number, number>();
+      update.forEach((page, index) => numberIndexMap.set(page, index));
 
-    return from(Array.from(rulesMap.entries())).pipe(
-      mergeMap(([before, afterSet]) =>
-        of(before).pipe(
-          filter(() => positions.has(before)), // Only check rules for pages in the update
-          mergeMap(() => from(Array.from(afterSet))),
-          every(
-            (after) =>
-              !positions.has(after) ||
-              positions.get(before)! < positions.get(after)!
+      return from(Array.from(sequenceRulesMap.entries())).pipe(
+        mergeMap(([number, sequenceRule]) =>
+          of(number).pipe(
+            // Only check rules for pages in the update
+            filter((number) => numberIndexMap.has(number)),
+            mergeMap(() => from(Array.from(sequenceRule))),
+            // check if number rules is respected
+            every(
+              (numberAfter) =>
+                !numberIndexMap.has(numberAfter) ||
+                numberIndexMap.get(number)! < numberIndexMap.get(numberAfter)!
+            )
           )
-        )
-      ),
-      every((isValid) => isValid) // Ensure all rules are valid
-    );
-  };
-
-  // Fix the order of a single update
-  const fixUpdateOrder = (update: number[]): number[] => {
-    const sorted = [...update].sort((a, b) => {
-      if (rulesMap.get(a)?.has(b)) return -1; // a must come before b
-      if (rulesMap.get(b)?.has(a)) return 1; // b must come before a
-      return 0; // no ordering constraint
-    });
-    return sorted;
-  };
-
-  // Find the middle page
-  const findMiddlePage = (update: number[]): number => {
-    const middleIndex = Math.floor(update.length / 2);
-    return update[middleIndex];
-  };
-
-  // RxJS solution
-  from(updatesInput)
-    .pipe(
-      // Validate updates reactively
-      mergeMap((update) =>
-        validateUpdateRx(update).pipe(
-          filter((isValid) => !isValid), // Only pass invalid updates
-          map(() => fixUpdateOrder(update)) // Fix the order of invalid updates
-        )
-      ),
-      // Map to the middle page of fixed updates
-      map(findMiddlePage),
-      // Sum up the middle pages
-      reduce((sum, middlePage) => sum + middlePage, 0)
+        ),
+        // check if all rules are valid
+        every((isValid) => isValid), 
+        // Only pass invalid update
+        filter((isValid) => !isValid),
+        // Fix the order of invalid update
+        map(() =>
+          [...update].sort((a, b) => {
+            if (sequenceRulesMap.get(a)?.has(b)) return -1; // a before b
+            if (sequenceRulesMap.get(b)?.has(a)) return 1; // b before a
+            return 0; // no ordering constraint
+          })
+        ),
+        // Map back to the middle page of fixed update
+        map((fixedUpdate) => fixedUpdate[Math.floor(fixedUpdate.length / 2)])
+      );
+    }),
+    // Sum up the middle pages
+    reduce((sum, middlePage) => sum + middlePage, 0),
+    tap((result) =>
+      console.log(`Sum of middle pages of fixed updates: ${result}`)
     )
-    .subscribe((result) => {
-      console.log(`Sum of middle pages of fixed updates: ${result}`);
-    });
+  );
 }

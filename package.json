@@ -3,18 +3,15 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "run-a-day": "npx nx run-many -t build && node run-a-day/dist/index.js",
-    "day-01": "npx nx run @ts-advent-of-code-2024/day-01:build && node day-01/dist/index.js",
-    "day-02": "npx nx run @ts-advent-of-code-2024/day-02:build && node day-02/dist/index.js",
-    "day-03": "npx nx run @ts-advent-of-code-2024/day-03:build && node day-03/dist/index.js",
-    "day-04": "npx nx run @ts-advent-of-code-2024/day-04:build && node day-04/dist/index.js",
-    "day-05": "npx nx run @ts-advent-of-code-2024/day-05:build && node day-05/dist/index.js",
-    "day-06": "npx nx run @ts-advent-of-code-2024/day-06:build && node day-06/dist/index.js"
+    "start": "npx nx run-many -t build && node run-a-day/dist/index.js",
+    "run-a-day": "npx nx run-many -t build && node run-a-day/dist/index.js"
   },
   "private": true,
   "dependencies": {
+    "@nx/node": "^20.1.4",
     "figlet": "^1.8.0",
     "inquirer": "^12.2.0",
+    "nanospinner": "^1.2.2",
     "rxjs": "^7.8.1",
     "yoctocolors-cjs": "^2.1.2"
   },
